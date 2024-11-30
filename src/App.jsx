@@ -6,12 +6,12 @@ import JobListing from "./Homepage/JobListing";
 import Footer from "./Homepage/Footer";
 import Navbar from "./Homepage/Navbar";
 import { useNavigate } from "react-router-dom";
-// import useGetAlljob from "./hooks/useGetAlljob.jsx";
+import useGetAlljob from "./hooks/useGetAlljob.jsx";
 
 export default function App() {
   let navigate = useNavigate();
 
-  // useGetAlljob();
+  useGetAlljob();
   return (
     <>
       <Navbar />
