@@ -7,7 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 import New_job from "./New_job";
-import useGetAlljob from "@/hooks/useGetAllJob";
+import useGetAlljob from "@/hooks/useGetAlljob";
 import { jobContext } from "@/Store/store";
 import useGetAdminJob from "@/hooks/useGetAdminJob";
 

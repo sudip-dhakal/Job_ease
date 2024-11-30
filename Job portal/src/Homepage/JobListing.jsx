@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Joblist from "../ReactComponent/Jobcard";
 import jobs from "../jobs";
 import { jobContext } from "@/Store/store";
-import useGetAlljob from "@/hooks/useGetAllJob";
+import useGetAlljob from "@/hooks/useGetAlljob";
 
 export default function JobListing() {
   let { jobs, setJobs } = useContext(jobContext);
