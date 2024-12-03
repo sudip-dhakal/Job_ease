@@ -32,7 +32,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex bg-primary text-white items-center h-16 !bg-cyan text-lg pl-20 pr-20 w-full fixed top-0 z-20  ">
+    <nav className="flex bg-primary text-white items-center h-16 !bg-cyan text-lg    pl-20 pr-20 w-full fixed top-0 z-20  ">
       <div className="flex items-center w-48">
         <Link to="/">
           <img
@@ -55,9 +55,6 @@ export default function Navbar() {
             </li>
             <li>
               <Link to="/job">Job</Link>
-            </li>
-            <li>
-              <Link to="/browse">Browse</Link>
             </li>
             <li>
               <Link to="/login">
@@ -125,9 +122,7 @@ export default function Navbar() {
                 <li>
                   <Link to="/job">Job</Link>
                 </li>
-                <li>
-                  <Link to="/browse">Browse</Link>
-                </li>
+                
 
                 <div>
                   <Popover>

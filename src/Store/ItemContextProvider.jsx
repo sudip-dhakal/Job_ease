@@ -26,7 +26,6 @@ export default function ItemContextProvider({ children }) {
 
   function filterfunc() {
     let newitem = items.filter((item) => {
-      console.log(item.employmentType);
       let jobtypeMatch = jobtype.length
         ? jobtype.includes(item.employmentType)
         : true;
@@ -35,9 +34,6 @@ export default function ItemContextProvider({ children }) {
         : true;
 
       let salaryMatch = salary ? item.salary > salary : true;
-      console.log(salary);
-      console.log(keyword);
-      console.log(items);
 
       let keywordMatch1 = keyword.length
         ? keyword.some((el) => item.keyword.includes(el))

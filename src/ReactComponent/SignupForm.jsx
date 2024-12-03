@@ -6,8 +6,6 @@ import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 
-// Replace this with your actual logo file path
-
 export default function SignupForm() {
   let navigate = useNavigate();
   let [input, setInput] = useState({
@@ -49,14 +47,12 @@ export default function SignupForm() {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log(res);
         navigate("/login");
 
         toast.success(res.data.message);
       }
       console.log(res);
     } catch (error) {
-      console.log(error);
       toast.error();
     }
   };
@@ -72,7 +68,6 @@ export default function SignupForm() {
         <h1 className="text-center font-bold text-3xl mb-6">SIGNUP</h1>
 
         <form onSubmit={handelSubmit}>
-          {/* Full Name */}
           <div className="mb-4">
             <label htmlFor="name" className="block font-semibold text-md">
               Full Name:
@@ -146,7 +141,7 @@ export default function SignupForm() {
               Profile Picture:
             </label>
             <input
-              className="block h-10 w-full border-slate-400 border-2 rounded-md pl-3"
+              className="block h-10 w-full border-slate-400 border-2 rounded-md p-3"
               type="file"
               accept="image/*"
               onChange={handelFileChange}

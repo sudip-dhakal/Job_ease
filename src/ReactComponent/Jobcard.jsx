@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Jobcard({ item }) {
   let navigate = useNavigate();
   let Id = 1;
-  console.log(item);
+  // console.log(item);
 
   return (
     <>
@@ -25,11 +25,6 @@ export default function Jobcard({ item }) {
               <h4 className="text-sm text-gray-500">{item.postedDate}</h4>
             </div>
           </div>
-
-          {/* Save Button */}
-          <button className="bg-gray-100 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded-full p-2 transition-all duration-200 ease-in-out shadow-md">
-            Save
-          </button>
         </div>
 
         {/* Job Title */}
@@ -40,23 +35,23 @@ export default function Jobcard({ item }) {
         {/* Job Tags */}
         <div className="flex space-x-2 mb-4">
           {/* Salary Tag */}
-          <span className="inline-flex items-center bg-blue-200 text-blue-700 font-semibold text-xs px-3 py-1 rounded-full">
+          <span className="inline-flex items-center bg-blue-200 text-blue-700 font-semibold text-xs px-3 py-1 rounded-full cursor-default" title="Salary">
             {item.salary}
           </span>
 
           {/* Employment Type Tag */}
-          <span className="inline-flex items-center bg-green-200 text-green-700 font-semibold text-xs px-3 py-1 rounded-full">
+          <span className="inline-flex items-center bg-green-200 text-green-700 font-semibold text-xs px-3 py-1 rounded-full cursor-default" title="Job type">
             full_time
           </span>
 
           {/* Job Level Tag */}
-          <span className="inline-flex items-center bg-yellow-200 text-yellow-700 font-semibold text-xs px-3 py-1 rounded-full">
+          <span className="inline-flex items-center bg-yellow-200 text-yellow-700 font-semibold text-xs px-3 py-1 rounded-full cursor-default" title="Experience in years">
             {item.experienceLevel}
           </span>
         </div>
 
         {/* Location */}
-        <div className="text-gray-700 font-medium text-sm mb-4">
+        <div className="text-gray-700 font-medium text-sm mb-4 cursor-default" title="Location">
           {item.location}
         </div>
 

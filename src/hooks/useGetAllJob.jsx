@@ -2,10 +2,9 @@ import { jobContext } from "@/Store/store";
 import { JOB_API_END_POINT } from "@/utils/constant";
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
-import { toast } from "sonner";
 
 export default function useGetAlljob() {
-  let { jobs, setJobs } = useContext(jobContext);
+  let { setJobs } = useContext(jobContext);
   useEffect(() => {
     let fetchAllJob = async () => {
       try {

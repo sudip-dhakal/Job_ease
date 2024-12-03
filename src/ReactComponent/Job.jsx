@@ -36,8 +36,6 @@ export default function Job() {
         ? prevTypes.filter((type) => type != event.target.value)
         : [...prevTypes, event.target.value]
     );
-
-    console.log(jobtype);
   }
 
   function handleLocationFilter(event) {
@@ -46,8 +44,6 @@ export default function Job() {
         ? prevTypes.filter((type) => type != event.target.value)
         : [...prevTypes, event.target.value]
     );
-
-    console.log(jobtype);
   }
   function handleKeywordFilter(event) {
     setKeyword((prevTypes) =>
@@ -55,8 +51,6 @@ export default function Job() {
         ? prevTypes.filter((type) => type != event.target.value)
         : [...prevTypes, event.target.value]
     );
-
-    console.log(jobtype);
   }
 
   function handleClear() {
@@ -66,7 +60,12 @@ export default function Job() {
     setSalary(0);
   }
 
-  useEffect(() => filterfunc(), [location, keyword, jobtype, salary]);
+  useEffect(() => {
+    filterfunc();
+    console.log("Filter function called");
+  }, [location, keyword, jobtype, salary]);
+
+  // useEffect(() => filterfunc(), [location, keyword, jobtype, salary]);
 
   return (
     <>

@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 
 export default function useGetAdminJob() {
-  let { adminjob, setAdminJob } = useContext(jobContext);
+  let { setAdminJob } = useContext(jobContext);
   useEffect(() => {
     let fetchedAdminJob = async () => {
       try {

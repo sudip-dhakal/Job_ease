@@ -13,100 +13,91 @@ const Profile = () => {
   const [showEdit, setShowEdit] = useState(false);
   let { user } = useContext(itemContext);
   let { appliedJob, setAppliedJob } = useContext(ApplicationContext);
-  console.log(user);
   useGetAppliedJob();
+
+  console.log(user);
 
   return (
     <>
-      <div className="w-[70%] mt-10 ml-auto mr-auto  p-4">
-        <div className=" shadow-lg rounded-[10px] p-4 ">
-          <div className="flex items-center ">
-            <img
-              src="../../Public/image/userProfile.png"
-              className="w-[5%] h-[5%] ml-10"
-            />
-
-            <span className="ml-6">
-              <h1 className="font-semibold text-xl ">{user.fullName}</h1>
-              <p className=" text-[1rem]">{user.profile.bio}</p>
-            </span>
-            <MdEdit
-              onClick={() => setShowEdit(true)}
-              size={30}
-              className="cursor-pointer ml-auto"
-            />
+      <div className="w-[70%] mt-10 mx-auto p-6 bg-white shadow-xl rounded-lg">
+        <div className="flex items-center mb-6">
+          <img
+            src="../../Public/image/userProfile.png"
+            className="w-16 h-16 rounded-full shadow-md"
+            alt="User Profile"
+          />
+          <div className="ml-6">
+            <h1 className="font-bold text-2xl text-gray-800">
+              {user.fullName}
+            </h1>
+            <p className="text-sm text-gray-600">{user.profile.bio}</p>
           </div>
-
-          <div className="ml-11 mt-4 flex-col gap-20">
-            <p className="flex gap-5 mb-2">
-              <span>
-                <SiGmail size={20} className="relative top-[0.1rem]" />{" "}
-              </span>
-              <span>{user.email}</span>
-            </p>
-
-            <p className="flex gap-5">
-              <span>
-                <FaPhoneAlt size={20} />
-              </span>{" "}
-              <span> {user.phoneNumber}</span>
-            </p>
-          </div>
-
-          <div className="ml-11 mt-10">
-            <h3
-              className="font-semibold
-           text-[1rem]"
-            >
-              Skills
-            </h3>
-            <div className="flex gap-5">
-              {user.profile.skills.map((item) => (
-                <Skillset name={item} />
-              ))}
-            </div>
-            <h1 className="font-semibold">Resume</h1>
-            <a
-              href="resumeOriginalName
-"
-            >
-              {user.profile.resume}
-            </a>
-          </div>
+          <MdEdit
+            onClick={() => setShowEdit(true)}
+            size={30}
+            className="cursor-pointer ml-auto text-gray-600 hover:text-blue-500"
+          />
         </div>
 
-        <div className="mt-8">
-          <h1 className="font-bold">Applied Jobs</h1>
-          <table className="mt-4 w-[70%] p-4  text-center">
+        <div className="ml-6">
+          <p className="flex items-center gap-4 mb-4 text-gray-700">
+            <SiGmail size={20} className="text-blue-500" />
+            <span>{user.email}</span>
+          </p>
+          <p className="flex items-center gap-4 text-gray-700">
+            <FaPhoneAlt size={20} className="text-green-500" />
+            <span>{user.phoneNumber}</span>
+          </p>
+        </div>
+
+        <div className="mt-6 ml-6">
+          <h3 className="font-semibold text-lg text-gray-800 mb-2">Skills</h3>
+          <div className="flex flex-wrap gap-3">
+            {user.profile.skills.map((item) => (
+              <Skillset name={item} key={item} />
+            ))}
+          </div>
+          <h3 className="font-semibold mt-4">Resume</h3>
+          <a
+            href="resumeOriginalName"
+            className="text-blue-500 hover:underline"
+          >
+            {user.profile.resume}
+          </a>
+        </div>
+
+        <div className="mt-10">
+          <h1 className="font-bold text-xl text-gray-800">Applied Jobs</h1>
+          <table className="mt-4 w-full border-collapse">
             <thead>
-              <tr>
-                <th>Date</th>
-                <th>Job Role</th>
-                <th>Company</th>
-                <th>Status</th>
+              <tr className="bg-gray-100 text-gray-700 text-left">
+                <th className="p-3">Date</th>
+                <th className="p-3">Job Role</th>
+                <th className="p-3">Company</th>
+                <th className="p-3">Status</th>
               </tr>
             </thead>
-            <tbody className="">
-              {appliedJob.map((item, index) => {
-                return (
-                  <tr
-                    key={index}
-                    className="border-b border-dashed border-black"
-                  >
-                    <td className="px-4 py-2">{item.job.createdAt}</td>
-                    <td className="px-4 py-2">{item.job.title}</td>
-                    <td className="px-4 py-2">{item.job.company.name}</td>
-                    <td className="p-1">
-                      <Skillset name={item.status} />
-                    </td>
-                  </tr>
-                );
-              })}
+            <tbody>
+              {appliedJob.map((item, index) => (
+                <tr key={index} className="bg-gray-50">
+                  <td className="p-3 border-b">{item.job.createdAt}</td>
+                  <td className="p-3 border-b">{item.job.title}</td>
+                  <td className="p-3 border-b">{item.job.company.name}</td>
+                  <td className="p-3 border-b">{item.status}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
-      <div>{showEdit && <Edit setShowEdit={setShowEdit} />}</div>
+
+      {showEdit && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <Edit setShowEdit={setShowEdit} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

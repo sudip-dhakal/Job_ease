@@ -60,7 +60,7 @@ const New_job = ({ setNewJobFlag }) => {
       <div className="bg-black backdrop-blur-sm fixed inset-0 flex justify-center items-center bg-opacity-50 transition-opacity duration-300 ease-linear opacity-100">
         <div className="w-full max-w-2xl mx-auto bg-white rounded-lg p-6 shadow-lg">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-2xl">Post a New Job!</h3>
+            <h3 className="font-bold text-2xl">Post a New Job!  </h3>
             <button type="button" className="text-gray-600 hover:text-gray-900">
               <ImCross size={20} onClick={() => setNewJobFlag(false)} />
             </button>
