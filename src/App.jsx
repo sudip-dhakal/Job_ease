@@ -7,22 +7,13 @@ import Footer from "./Homepage/Footer";
 import Navbar from "./Homepage/Navbar";
 import { useNavigate } from "react-router-dom";
 import useGetAlljob from "./hooks/useGetAlljob.jsx";
-import Additional_Information from "./ReactComponent/Additional_Information";
 
 export default function App() {
   useGetAlljob();
   return (
     <>
-      {/* <Navbar />
-      <Hero /> */}
-      
-      <Additional_Information/>
-      
-      {/*Exit from here*/}
-      {/* <Category /> */}
-      {/* <JobListing /> */}
-
-      {/* <Footer /> */}
+      <Navbar />
+      <Hero />
     </>
   );
 }

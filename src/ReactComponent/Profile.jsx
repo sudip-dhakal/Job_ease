@@ -22,7 +22,7 @@ const Profile = () => {
       <div className="w-[70%] mt-10 mx-auto p-6 bg-white shadow-xl rounded-lg">
         <div className="flex items-center mb-6">
           <img
-            src="../../Public/image/userProfile.png"
+            src={user.profile.profilePic}
             className="w-16 h-16 rounded-full shadow-md"
             alt="User Profile"
           />
@@ -58,12 +58,17 @@ const Profile = () => {
             ))}
           </div>
           <h3 className="font-semibold mt-4">Resume</h3>
-          <a
-            href="resumeOriginalName"
-            className="text-blue-500 hover:underline"
-          >
-            {user.profile.resume}
-          </a>
+
+          {user.profile.resume != "No resume provided" ? (
+            <a
+              href="resumeOriginalName"
+              className="text-blue-500 hover:underline"
+            >
+              {user.profile.resume}
+            </a>
+          ) : (
+            <p className="text-blue-700 italic">No Resume Provided</p>
+          )}
         </div>
 
         <div className="mt-10">

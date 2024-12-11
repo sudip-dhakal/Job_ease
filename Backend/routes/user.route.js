@@ -19,7 +19,7 @@ router.route("/login").post(login);
 // Profile update route with multiUpload for both profilePic and resume
 router
   .route("/profile/update")
-  .post(isAuthenticated, multiUpload, updateProfile);
+  .patch(isAuthenticated, multiUpload, updateProfile);
 
 // Logout route
 router.route("/logout").get(logout);

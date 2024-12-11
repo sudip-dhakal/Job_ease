@@ -1,42 +1,73 @@
 import React, { useContext, useState } from "react";
 import { ImCross } from "react-icons/im";
-import Button from "./Button1";
 import itemContext from "@/Store/store";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 
 const Edit = ({ setShowEdit }) => {
-  let navigate = useNavigate();
   let { user } = useContext(itemContext);
+  let formData = new FormData();
 
-  let [input, setInput] = useState({
+
+  console.log(user)
+  const skillSet = [
+    "Python",
+    "Ruby",
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "Node JS",
+    "Django",
+    "React",
+    "Angular",
+    "Vue",
+    "Flask",
+  ];
+
+  const [skills, setSkills] = useState([]);
+  const [input, setInput] = useState({
     fullName: user.fullName,
     email: user.email,
     phoneNumber: user.phoneNumber,
     bio: user.profile.bio,
     skills: user.profile.skills,
     files: user.profile.resume,
+    profilePic: user.profile.profilePic,
   });
-  let handelEventChange = (e) => {
+
+  const handelEventChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  let handelFileChange = (e) => {
+
+  const handelFileChange = (e) => {
     setInput({ ...input, files: e.target.files?.[0] });
   };
-  let handelSubmit = async (e) => {
-    console.log(input);
+
+  const handleSkillChange = (e) => {
+    const selectedSkills = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    setSkills([...skills, ...selectedSkills]);
+  };
+
+  const handleSkillRemove = (skillToRemove) => {
+    const updatedSkills = skills.filter((item) => item !== skillToRemove);
+    setSkills(updatedSkills);
+  };
+
+  const handelSubmit = async (e) => {
     e.preventDefault();
-    let formData = new FormData();
+
     formData.append("fullName", input.fullName);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
-    formData.append("skills", input.skills);
+    formData.append("skills", skills);
     formData.append("resume", input.files);
+
     try {
-      let res = await axios.post(
+      const res = await axios.put(
         `${USER_API_END_POINT}/profile/update`,
         formData,
         {
@@ -47,100 +78,141 @@ const Edit = ({ setShowEdit }) => {
         }
       );
       if (res.data.success) {
-        console.log(res);
         toast.success(res.data.message);
         setShowEdit(false);
       }
     } catch (error) {
-      toast.error(res.data.message);
-    }
-  };
-
-  let handleUpdate = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      handleClear();
-      setShowEdit(false);
+      toast.error("Something went wrong, please try again.");
     }
   };
 
   return (
-    <>
-      <div className="bg-black backdrop-blur-sm fixed inset-0 flex justify-center items-center bg-opacity-30 transition-opacity duration-300 ease-linear opacity-100">
-        <div className="w-[50%] ml-auto mr-auto text-black bg-white rounded-[20px] p-8 shadow-lg">
-          <div className="flex justify-between mb-6">
-            <h1 className="font-bold text-2xl">Update Profile</h1>
-            <p className="cursor-pointer">
-              <ImCross onClick={() => setShowEdit(false)} />
-            </p>
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      {/* Full-Screen Container */}
+      <div className="w-full h-full bg-white rounded-lg shadow-lg p-6 relative overflow-y-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center border-b pb-4 mb-6">
+          <h2 className="text-xl font-bold">Update Profile</h2>
+          <button
+            className="text-gray-600 hover:text-gray-800"
+            onClick={() => setShowEdit(false)}
+          >
+            <ImCross />
+          </button>
+        </div>
 
-          <p className="text-red-700 text-center mb-4">message</p>
-          <form onSubmit={handelSubmit}>
-            <div className="flex flex-col gap-8">
-              <div className="flex justify-between gap-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-[48%] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  name="fullName"
-                  value={input.fullName}
-                  onChange={handelEventChange}
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-[48%] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  name="email"
-                  value={input.email}
-                  onChange={handelEventChange}
-                />
-              </div>
-              <div className="flex justify-between gap-4">
-                <input
-                  type="text"
-                  placeholder="Your Phone Number"
-                  className="w-[48%] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  name="phoneNumber"
-                  value={input.phoneNumber}
-                  onChange={handelEventChange}
-                />
-                <input
-                  type="text"
-                  placeholder="Your Bio"
-                  className="w-[48%] p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  name="bio"
-                  value={input.bio}
-                  onChange={handelEventChange}
-                />
-              </div>
-
+        <form onSubmit={handelSubmit} className="space-y-6">
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1">
+                Full Name
+              </label>
               <input
                 type="text"
-                placeholder="Your Skills"
-                className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                name="skills"
-                value={input.skills}
+                name="fullName"
+                placeholder="Enter your name"
+                value={input.fullName}
                 onChange={handelEventChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
               />
-
-              <div className="flex flex-col">
-                <label className="font-semibold mb-2">Upload Resume</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  onChange={handelFileChange}
-                />
-              </div>
-              <div className="flex justify-between">
-                <button type="submit">Submit</button>
-              </div>
             </div>
-          </form>
-        </div>
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={input.email}
+                onChange={handelEventChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                name="phoneNumber"
+                placeholder="Enter your phone number"
+                value={input.phoneNumber}
+                onChange={handelEventChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1">Bio</label>
+              <input
+                type="text"
+                name="bio"
+                placeholder="Tell us about yourself"
+                value={input.bio}
+                onChange={handelEventChange}
+                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Your Skills
+            </label>
+            <select
+              id="skills"
+              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              multiple
+              onChange={handleSkillChange}
+              value={skills}
+            >
+              {skillSet.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <div className="flex flex-wrap mt-3 gap-2">
+              {skills.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded-full"
+                >
+                  <span>{item}</span>
+                  <ImCross
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => handleSkillRemove(item)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Upload Resume
+            </label>
+            <input
+              type="file"
+              accept="application/pdf"
+              className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
+              onChange={handelFileChange}
+            />
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            >
+              Update Profile
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
