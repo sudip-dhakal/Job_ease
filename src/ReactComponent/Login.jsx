@@ -44,16 +44,13 @@ export default function Login() {
     <>
       <Navbar />
       <div className="mt-20 h-auto w-[35%] border-2 m-auto px-8 shadow-lg p-8 rounded-lg bg-white">
-        {/* Logo Section */}
         <div className="flex justify-center">
           <img src="./image/logo.png" alt="Logo" className="h-16 w-16 mb-4" />
         </div>
 
-        {/* Heading Section */}
         <h1 className="text-center font-bold text-4xl mb-6 text-navy">Login</h1>
 
         <form onSubmit={handelSubmit}>
-          {/* Email */}
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -73,7 +70,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Password */}
           <div className="mb-6">
             <label
               htmlFor="password"
@@ -120,7 +116,6 @@ export default function Login() {
             </label>
           </div>
 
-          {/* Forgot Password Link */}
           <div className="text-right mb-6">
             <a
               href="#"
@@ -130,7 +125,6 @@ export default function Login() {
             </a>
           </div>
 
-          {/* Login Button */}
           <button
             type="submit"
             className="h-12 w-full bg-coral text-white rounded-md font-semibold hover:bg-orange-500 active:bg-orange-600 transition-all duration-200"
@@ -139,7 +133,6 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Signup Link */}
         <div className="text-center mt-4">
           <p className="text-sm text-gray-700">
             Don't have an account?{" "}

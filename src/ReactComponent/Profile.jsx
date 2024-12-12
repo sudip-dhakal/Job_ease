@@ -35,6 +35,7 @@ const Profile = () => {
           <MdEdit
             onClick={() => setShowEdit(true)}
             size={30}
+            title="Edit your profile"
             className="cursor-pointer ml-auto text-gray-600 hover:text-blue-500"
           />
         </div>

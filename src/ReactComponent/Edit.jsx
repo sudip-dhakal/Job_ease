@@ -9,8 +9,7 @@ const Edit = ({ setShowEdit }) => {
   let { user } = useContext(itemContext);
   let formData = new FormData();
 
-
-  console.log(user)
+  // console.log(user);
   const skillSet = [
     "Python",
     "Ruby",
@@ -68,7 +67,7 @@ const Edit = ({ setShowEdit }) => {
 
     try {
       const res = await axios.put(
-        `${USER_API_END_POINT}/profile/update`,
+        "http://localhost:8000/api/v1/user/profile/update",
         formData,
         {
           headers: {
@@ -85,12 +84,18 @@ const Edit = ({ setShowEdit }) => {
       toast.error("Something went wrong, please try again.");
     }
   };
+  formData.append("fullName", input.fullName);
+  formData.append("email", input.email);
+  formData.append("phoneNumber", input.phoneNumber);
+  formData.append("bio", input.bio);
+  formData.append("skills", skills);
+  formData.append("resume", input.files);
+
+  console.log(formData);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      {/* Full-Screen Container */}
       <div className="w-full h-full bg-white rounded-lg shadow-lg p-6 relative overflow-y-auto">
-        {/* Header */}
         <div className="flex justify-between items-center border-b pb-4 mb-6">
           <h2 className="text-xl font-bold">Update Profile</h2>
           <button
