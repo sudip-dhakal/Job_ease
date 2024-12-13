@@ -9,6 +9,7 @@ import itemContext from "../Store/store";
 
 export default function Login() {
   let { user, setUser } = useContext(itemContext);
+  let [loadingState, setLoadingState] = useState(false);
   let navigate = useNavigate();
   let [input, setInput] = useState({
     email: "",
@@ -19,6 +20,7 @@ export default function Login() {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   let handelSubmit = async (e) => {
+    setLoadingState(true);
     e.preventDefault();
     console.log(input);
     try {
@@ -31,6 +33,9 @@ export default function Login() {
       if (res.data.success) {
         console.log(res);
         setUser(res.data.user);
+        // During login or user authentication
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+
         console.log(res);
 
         navigate("/");
@@ -38,6 +43,8 @@ export default function Login() {
       }
     } catch (error) {
       toast.error(error.response.data.error);
+    } finally {
+      setLoadingState(false);
     }
   };
   return (
