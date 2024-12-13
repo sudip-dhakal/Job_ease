@@ -15,6 +15,9 @@ export default function CreateCompany() {
   function handleCompanyModel() {
     setcompanyModel(true);
   }
+  function handleCancel() {
+    navigate("/admin/companytable");
+  }
 
   let navigate = useNavigate();
   let [companyName, setCompanyName] = useState("");
@@ -67,7 +70,10 @@ export default function CreateCompany() {
               required
             ></input>
             <div className="mt-4">
-              <button className="h-8 w-24 bg-slate-500 rounded-md ">
+              <button
+                className="h-8 w-24 bg-slate-500 rounded-md "
+                onClick={handleCancel}
+              >
                 Cancel
               </button>
               <button

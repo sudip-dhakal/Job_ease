@@ -20,51 +20,55 @@ export default function Companies({ closemodel }) {
     location: "",
     file: "",
   });
+  let [loading, setLoading] = useState(false); // Manage loading state
+
   function handelClick() {
     closemodel();
-    // setIsFetched(false);
   }
 
   function handelEventChange(e) {
     setCompany({ ...company, [e.target.name]: e.target.value });
   }
+
   function handelFileChange(e) {
     setCompany({ ...company, file: e.target.files?.[0] });
   }
-  let handelSubmit = async (e) => {
-    {
-      e.preventDefault();
 
-      console.log(company);
-      let formData = new FormData();
-      formData.append("name", company.name);
-      formData.append("description", company.description);
-      formData.append("website", company.website);
-      formData.append("location", company.location);
-      formData.append("profilePic", company.file);
-      try {
-        let res = await axios.put(
-          `${ADMIN_API_END_POINT}/update/${params.id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "mulitpart/formdata",
-            },
-            withCredentials: true,
-          }
-        );
-        if (res.data.success) {
-          toast.success(res.data.message);
-          navigate("/admin/companytable");
+  let handelSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true); // Set loading to true when submitting the form
+
+    let formData = new FormData();
+    formData.append("name", company.name);
+    formData.append("description", company.description);
+    formData.append("website", company.website);
+    formData.append("location", company.location);
+    formData.append("profilePic", company.file);
+
+    try {
+      let res = await axios.put(
+        `${ADMIN_API_END_POINT}/update/${params.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
         }
-      } catch (error) {
-        console.log(error);
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/admin/companytable");
       }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while updating the company.");
+    } finally {
+      setLoading(false); // Set loading to false once the request is complete
     }
   };
 
   useEffect(() => {
-    console.log(singlecompany);
     setCompany({
       name: singlecompany.name,
       description: singlecompany.description,
@@ -83,7 +87,7 @@ export default function Companies({ closemodel }) {
       ></div>
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[35rem] h-[24rem] rounded-md p-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold ">Company Setup</h1>
+          <h1 className="text-2xl font-semibold">Company Setup</h1>
           <RxCross2
             style={{ color: "black", fontSize: "25px", fontWeight: "bold" }}
             onClick={handelClick}
@@ -167,9 +171,36 @@ export default function Companies({ closemodel }) {
             </div>
             <button
               type="submit"
-              className="w-full h-8 bg-coral mt-4 rounded-md font-bold"
+              disabled={loading} // Disable the button while loading
+              className={`w-full h-12 mt-4 rounded-md font-bold flex justify-center items-center transition-all duration-300 ease-in-out ${
+                loading ? "bg-gray-400" : "bg-coral hover:bg-coral-dark"
+              } `}
             >
-              Update
+              {loading ? (
+                <svg
+                  className="w-6 h-6 text-white animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="none"
+                    d="M4 12a8 8 0 0116 0 8 8 0 01-16 0z"
+                  ></path>
+                </svg>
+              ) : (
+                "Update"
+              )}
             </button>
           </div>
         </form>
