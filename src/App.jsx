@@ -12,7 +12,7 @@ export default function App() {
   useGetAlljob();
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
     </>
   );

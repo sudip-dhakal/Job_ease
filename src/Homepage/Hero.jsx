@@ -1,61 +1,45 @@
-import itemContext from "@/Store/store";
-import React, { useContext, useRef } from "react";
-import { FaSearch } from "react-icons/fa";
+import React from "react";
+import Login from "../ReactComponent/Login";
+import SignupForm from "../ReactComponent/SignupForm";
 import { useNavigate } from "react-router-dom";
+import { Navigation } from "lucide-react";
 
-export default function Hero() {
-  let { filter, setFilter, applyfilter } = useContext(itemContext);
-  let location = useRef("");
-  let keyword = useRef("");
-  let navigate = useNavigate();
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    let loc = location.current.value;
-    let keyw = keyword.current.value;
-    applyfilter(keyw, loc);
-    navigate("/browse");
-  }
-
+const Hero = () => {
+  let Navigate = useNavigate();
   return (
-    <>
-      <div className="min-h-screen w-[100%] bg-hero-pattern bg-cover relative flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
-
-        <div className="ml-24 z-10 p-10 text-offWhite space-y-6 max-w-2xl">
-          <h1 className="text-6xl font-bold leading-tight">
-            Find Your Dream Job
+    <div className="bg-[#EAEAEA] w-full h-screen  flex items-center p-2">
+      <div className="mx-auto flex  justify-between ">
+        <div>
+          <img
+            src="./image/search.png"
+            alt="Search Icon"
+            className="relative left-[-200px] w-[80%]"
+          />
+        </div>
+        <div className="text-center mt-[100px] relative left-[-110px]">
+          <h1 className="text-5xl font-bold mb-4 text-left">
+            Find your dream job
           </h1>
-          <h2 className="text-2xl font-light">
-            Thousands of jobs are available for you
-          </h2>
-
-          <div className="flex mt-6 w-auto outline-black">
-            <form className="flex" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Enter keyword"
-                className="h-16 w-72 rounded-l-lg bg-darkGray text-black pl-4 border-r-2 border-solid border-gray-700 outline-none   text-[20px]"
-                name="keyword"
-                ref={keyword}
-              />
-              <input
-                type="text"
-                placeholder="Enter location"
-                className="h-16 w-72 bg-white pl-4 border-none outline-none  text-black text-[20px]"
-                name="location"
-                ref={location}
-              />
-              <button
-                type="submit"
-                className="h-16 w-16 flex items-center justify-center bg-gray-500 rounded-r-lg hover:bg-slate-400 "
-              >
-                <FaSearch className="text-white text-xl" />
-              </button>
-            </form>
+          <p className="text-lg mb-6">Thousands of Jobs are around YOU</p>
+          <p>You are just away from one click !!!</p>
+          <div className="flex space-x-6 mt-10 justify-center">
+            <button
+              onClick={() => Navigate("/login")}
+              className="bg-blue-500 hover:bg-blue-700 w-[30%] text-white font-semibold py-3 px-6 rounded hover:scale-125 hover:transition-all hover:duration-300"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => Navigate("./signup")}
+              className="border border-blue-500 w-[30%] hover:bg-blue-500 hover:text-white text-blue-500 font-semibold py-3 px-6 rounded hover:scale-125 hover:transition-all hover:duration-300"
+            >
+              Signup
+            </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Hero;
